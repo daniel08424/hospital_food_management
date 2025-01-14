@@ -1,0 +1,73 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb" // Set the provider to MongoDB
+  url      = env("DATABASE_URL") // URL will be set in your .env file
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Patient {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  diseases        String?
+  allergies       String?
+  room            String
+  bed             String
+  floor           String
+  age             String
+  gender          String
+  contact         String
+  emergencyContact String
+  createdAt       DateTime @default(now())
+}
+
+model DietChart {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  patientName   String
+  morningMeal   String
+  eveningMeal   String
+  nightMeal     String
+  instructions  String?
+  createdAt     DateTime @default(now())
+}
+
+model PantryStaff {
+  id          String @id @default(auto()) @map("_id")  @db.ObjectId
+  staffName   String
+  contactInfo String
+  location    String
+  tasks       String
+  createdAt   DateTime @default(now())
+}
+
+model MealTracking {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId// MongoDB ObjectId
+  patientName  String
+  mealType     String
+  status       String
+  deliveryTime  String
+  anyIssues    String?
+  createdAt    DateTime @default(now())
+}
+
+model DeliveryPersonnel {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  contactInfo String
+  otherDetails String?
+  patientName  String?
+  mealType     String?
+  status       String?
+  roomId       String?
+  deliveryTime DateTime?
+  createdAt    DateTime @default(now())
+}
